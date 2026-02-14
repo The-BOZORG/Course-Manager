@@ -43,6 +43,10 @@ const User = database.define(
         },
       },
     },
+    role: {
+      type: DataTypes.ENUM('admin', 'user'),
+      defaultValue: 'user',
+    },
   },
   {
     tableName: 'users',
