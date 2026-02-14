@@ -6,7 +6,11 @@ import database from './configs/dbConfig.js';
 
 //router
 
-//middlewares
+//errors
+import errorHandler from './errors/errorHandler.js';
+import notFound from './errors/notFound.js';
+
+//packages
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -20,6 +24,8 @@ app.use(helmet());
 //packages
 
 //routes
+app.use(errorHandler);
+app.use(notFound);
 
 //server
 const PORT = process.env.PORT || 5000;
