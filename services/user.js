@@ -24,7 +24,7 @@ const registerService = async ({ body, ip, userAgent, res }) => {
   await Token.create({
     refreshToken: hashedToken,
     ip,
-    userAgent,
+    userAgent: userAgent,
     userId: user.id,
   });
 
@@ -58,14 +58,14 @@ const loginService = async ({ body, ip, userAgent, res }) => {
     where: {
       userId: user.id,
       ip,
-      userAgent,
+      userAgent: userAgent,
     },
   });
 
   await Token.create({
     refreshToken: hashedToken,
     ip,
-    userAgent,
+    userAgent: userAgent,
     userId: user.id,
   });
 
@@ -86,3 +86,4 @@ const logoutService = async ({ refreshToken, ip, userAgent }) => {
 };
 
 export { registerService, loginService, logoutService };
+

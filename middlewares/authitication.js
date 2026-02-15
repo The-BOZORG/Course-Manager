@@ -1,9 +1,10 @@
-import CustomError from '../errors/customError';
+import CustomError from '../errors/customError.js';
 import Token from '../models/token.js';
 import {
   verifyAccessToken,
   verifyRefreshToken,
   attachCookies,
+  hashToken,
 } from '../utils/jwt.js';
 
 const authenticateUser = async (req, res, next) => {
@@ -12,45 +13,52 @@ const authenticateUser = async (req, res, next) => {
   try {
     if (accessToken) {
       const auth = verifyAccessToken(accessToken);
-      req.user = auth.user;
-      return next();
+      if (auth) {
+        req.user = auth;
+        return next();
+      }
     }
 
-    if (!refreshToken) throw new CustomError('Authentication Invalid', 401);
+    if (!refreshToken) {
+      throw new CustomError('Authentication Invalid', 401);
+    }
 
     const auth = verifyRefreshToken(refreshToken);
+    if (!auth) {
+      throw new CustomError('Authentication Invalid', 401);
+    }
+
+    const hashedToken = hashToken(refreshToken);
     const existToken = await Token.findOne({
-      where: { userId: auth.user.userId, refreshToken: auth.refreshToken },
+      where: { userId: auth.userId, refreshToken: hashedToken },
     });
 
     if (!existToken) {
-      throw new CustomError('authentication Invalid', 401);
+      throw new CustomError('Authentication Invalid', 401);
     }
 
     const tokens = attachCookies({
       res,
-      user: auth.user,
+      user: auth,
     });
 
     await existToken.update({
-      refreshToken: tokens.refreshToken,
+      refreshToken: hashToken(tokens.refreshToken),
       ip: req.ip,
       userAgent: req.headers['user-agent'],
     });
 
-    req.user = auth.user;
+    req.user = auth;
     next();
   } catch (error) {
-    throw new CustomError('authentication Invalid', 401);
+    next(new CustomError('Authentication Invalid', 401));
   }
 };
 
 const authorizePermissions = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {
-      throw new CustomError.UnauthorizedError(
-        'Unauthorized to access this route',
-      );
+      throw new CustomError('Unauthorized to access this route', 403);
     }
     next();
   };

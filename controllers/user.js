@@ -14,13 +14,12 @@ const register = catchAsync(async (req, res) => {
   });
 
   if (error) {
-    throw new CustomError('input errors', 400);
+    throw new CustomError(error.details.map((item) => item.message).join(', '), 400);
   }
 
   const { user, accessToken } = await registerService({
     body: req.body,
     ip: req.ip,
-    userAgent: req.headers['user-agent'],
     res,
   });
 
@@ -39,16 +38,17 @@ const register = catchAsync(async (req, res) => {
 
 // LOGIN
 const login = catchAsync(async (req, res) => {
-  const { error } = loginSchema.validate(req.body);
+  const { error } = loginSchema.validate(req.body, {
+    abortEarly: false,
+  });
 
   if (error) {
-    throw new CustomError('input errors', 400);
+    throw new CustomError(error.details.map((item) => item.message).join(', '), 400);
   }
 
   const { user, accessToken } = await loginService({
     body: req.body,
     ip: req.ip,
-    userAgent: req.headers['user-agent'],
     res,
   });
 
@@ -66,16 +66,23 @@ const login = catchAsync(async (req, res) => {
 
 // LOGOUT
 const logout = catchAsync(async (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
+  const refreshToken = req.signedCookies.refreshToken;
 
   await logoutService({
     refreshToken,
     ip: req.ip,
-    userAgent: req.headers['user-agent'],
   });
 
-  res.clearCookie('refreshToken');
-  res.clearCookie('accessToken');
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
+  res.clearCookie('accessToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
 
   res.status(200).json({
     success: true,

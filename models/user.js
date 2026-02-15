@@ -15,7 +15,6 @@ const User = database.define(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
         len: {
           args: [3, 20],

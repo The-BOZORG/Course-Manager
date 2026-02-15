@@ -39,7 +39,7 @@ const startServer = async () => {
     console.log('Mysql connection successfully 🟢'.green);
 
     await database.sync({ force: true });
-    console.log('Models synced successfully 🟢'.green);
+    console.log('Models force-synced successfully 🟢'.green);
 
     app.listen(PORT, () => {
       console.log(`Server running in http://localhost:${PORT}`.cyan.bold);

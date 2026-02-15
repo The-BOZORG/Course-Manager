@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
 const createPayload = (user) => {
-  return { name: user.name, userId: user.id, role: user.role };
+  return { name: user.name, userId: user.userId ?? user.id, role: user.role };
 };
 
 const createAccessJWT = (payload) => {
@@ -44,6 +44,7 @@ const attachCookies = ({ res, user }) => {
   const refreshToken = createRefreshJWT(payload);
 
   res.cookie('accessToken', accessToken, {
+    signed: true,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
@@ -51,6 +52,7 @@ const attachCookies = ({ res, user }) => {
   });
 
   res.cookie('refreshToken', refreshToken, {
+    signed: true,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'strict',
