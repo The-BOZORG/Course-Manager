@@ -62,7 +62,7 @@ User.beforeSave(async (user) => {
   user.password = await bcrypt.hash(user.password, salt);
 });
 
-//Compare password
+//compare password
 User.prototype.comparePassword = async function (plainPassword) {
   return await bcrypt.compare(plainPassword, this.password);
 };
