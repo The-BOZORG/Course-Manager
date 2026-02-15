@@ -5,11 +5,12 @@ const app = express();
 import database from './configs/dbConfig.js';
 
 //router
+import userRoute from './routes/user.js';
 
 //middlewares
 import errorHandler from './errors/errorHandler.js';
 import notFound from './errors/notFound.js';
-import limiter from './utils/rateLimiter.js';
+import { generalLimiter, authLimiter } from './utils/rateLimiter.js';
 
 //packages
 import cookieParser from 'cookie-parser';
@@ -20,12 +21,13 @@ import colors from 'colors';
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(morgan('common'));
+app.use(morgan('dev'));
 app.use(helmet());
 
-//packages
-
 //routes
+app.use(generalLimiter);
+app.use('/auth', authLimiter, userRoute);
+
 app.use(errorHandler);
 app.use(notFound);
 
@@ -40,7 +42,7 @@ const startServer = async () => {
     console.log('Models synced successfully 🟢'.green);
 
     app.listen(PORT, () => {
-      console.log(`Server running in http://locahost:${PORT}`.cyan.bold);
+      console.log(`Server running in http://localhost:${PORT}`.cyan.bold);
     });
   } catch (error) {
     console.error('Database connection failed 🔴', error.message);
@@ -48,8 +50,8 @@ const startServer = async () => {
   }
 };
 
-process.on('SIGINT', async () => {
-  console.log('Received SIGINT. Closing DB...'.red.bold);
+const closeDB = async () => {
+  console.log('Closing DB...'.red.bold);
   try {
     await database.close();
     console.log('DB closed 🔴');
@@ -57,17 +59,9 @@ process.on('SIGINT', async () => {
     console.error('Error closing DB:', err);
   }
   process.exit(0);
-});
+};
 
-process.on('SIGTERM', async () => {
-  console.log('Received SIGTERM. Closing DB...'.red.bold);
-  try {
-    await database.close();
-    console.log('DB closed 🔴');
-  } catch (err) {
-    console.error('Error closing DB:', err);
-  }
-  process.exit(0);
-});
+process.on('SIGINT', closeDB);
+process.on('SIGTERM', closeDB);
 
 startServer();

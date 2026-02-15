@@ -1,4 +1,4 @@
-import CustomError from './CustomError.js';
+import CustomError from './customError.js';
 
 const errorHandler = (err, req, res, next) => {
   let error = err;

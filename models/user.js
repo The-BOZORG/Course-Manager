@@ -51,7 +51,6 @@ const User = database.define(
   {
     tableName: 'users',
     timestamps: true,
-    underscored: true,
     paranoid: false,
   },
 );
