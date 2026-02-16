@@ -40,7 +40,7 @@ const startServer = async () => {
     await database.authenticate();
     console.log('Mysql connection successfully 🟢'.green);
 
-    await database.sync({ force: true });
+    await database.sync();
     console.log('Models synced successfully 🟢'.green);
 
     app.listen(PORT, () => {

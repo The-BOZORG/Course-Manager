@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import database from '../configs/dbConfig.js';
-import User from './user.js';
 
 const RefreshToken = database.define(
   'RefreshToken',
@@ -39,17 +38,5 @@ const RefreshToken = database.define(
     paranoid: false,
   },
 );
-
-//connect to user model
-User.hasMany(RefreshToken, {
-  foreignKey: 'userId',
-  as: 'refreshTokens',
-  onDelete: 'CASCADE',
-});
-
-RefreshToken.belongsTo(User, {
-  foreignKey: 'userId',
-  as: 'user',
-});
 
 export default RefreshToken;

@@ -1,7 +1,5 @@
-const { DataTypes } = require('sequelize');
+import { DataTypes } from 'sequelize';
 import database from '../configs/dbConfig.js';
-import Course from './course.js';
-import User from './user.js';
 
 const Enrollment = database.define(
   'Enrollment',
@@ -44,16 +42,5 @@ const Enrollment = database.define(
     ],
   },
 );
-
-//connect to course model
-Enrollment.belongsTo(Course, {
-  foreignKey: 'courseId',
-  as: 'course',
-});
-
-Enrollment.belongsTo(User, {
-  foreignKey: 'userId',
-  as: 'user',
-});
 
 export default Enrollment;

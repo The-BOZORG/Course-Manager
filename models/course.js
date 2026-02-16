@@ -1,7 +1,6 @@
-const { DataTypes } = require('sequelize');
+import { DataTypes } from 'sequelize';
 import slugify from 'slugify';
 import database from '../configs/dbConfig.js';
-import Enrollment from './enrollment.js';
 
 const Course = database.define(
   'Course',
@@ -57,13 +56,6 @@ const Course = database.define(
     paranoid: false,
   },
 );
-
-//connect to enroll model
-Course.hasMany(Enrollment, {
-  foreignKey: 'courseId',
-  as: 'enrollments',
-  onDelete: 'CASCADE',
-});
 
 Course.beforeCreate((course) => {
   course.slug = slugify(course.title, {

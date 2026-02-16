@@ -1,7 +1,6 @@
 import { DataTypes } from 'sequelize';
 import database from '../configs/dbConfig.js';
 import bcrypt from 'bcrypt';
-import Enrollment from './enrollment.js';
 
 const User = database.define(
   'User',
@@ -55,13 +54,6 @@ const User = database.define(
     deletedAt: 'deletedAt',
   },
 );
-
-//connect to enroll model
-User.hasMany(Enrollment, {
-  foreignKey: 'userId',
-  as: 'enrollments',
-  onDelete: 'CASCADE',
-});
 
 //hash password before saving
 User.beforeSave(async (user) => {
