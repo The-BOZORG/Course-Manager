@@ -50,7 +50,8 @@ const User = database.define(
   {
     tableName: 'users',
     timestamps: true,
-    paranoid: false,
+    paranoid: true,
+    deletedAt: 'deletedAt',
   },
 );
 

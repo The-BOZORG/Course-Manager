@@ -5,7 +5,8 @@ const app = express();
 import database from './configs/dbConfig.js';
 
 //router
-import authRoute from './routes/user.js';
+import authRoute from './routes/auth.js';
+import userRoute from './routes/user.js';
 
 //middlewares
 import errorHandler from './errors/errorHandler.js';
@@ -27,6 +28,7 @@ app.use(helmet());
 //routes
 app.use(generalLimiter);
 app.use('/auth', authLimiter, authRoute);
+app.use('/user', userRoute);
 
 app.use(errorHandler);
 app.use(notFound);

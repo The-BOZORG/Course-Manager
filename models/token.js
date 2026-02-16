@@ -36,7 +36,7 @@ const RefreshToken = database.define(
   {
     tableName: 'refresh_tokens',
     timestamps: true,
-    paranoid: false,
+    paranoid: true,
   },
 );
 

@@ -4,7 +4,7 @@ import CustomError from '../errors/customError.js';
 import { attachCookies, hashToken } from '../utils/jwt.js';
 
 // REGISTER
-const registerService = async ({ body, ip, userAgent, res }) => {
+export const registerService = async ({ body, ip, userAgent, res }) => {
   const { name, email, password } = body;
 
   const emailExist = await User.findOne({ where: { email } });
@@ -35,7 +35,7 @@ const registerService = async ({ body, ip, userAgent, res }) => {
 };
 
 // LOGIN
-const loginService = async ({ body, ip, userAgent, res }) => {
+export const loginService = async ({ body, ip, userAgent, res }) => {
   const { email, password } = body;
 
   const user = await User.findOne({ where: { email } });
@@ -76,7 +76,7 @@ const loginService = async ({ body, ip, userAgent, res }) => {
 };
 
 // LOGOUT
-const logoutService = async ({ refreshToken, ip, userAgent }) => {
+export const logoutService = async ({ refreshToken, ip, userAgent }) => {
   if (refreshToken) {
     const hashedToken = hashToken(refreshToken);
     await Token.destroy({
@@ -84,6 +84,3 @@ const logoutService = async ({ refreshToken, ip, userAgent }) => {
     });
   }
 };
-
-export { registerService, loginService, logoutService };
-

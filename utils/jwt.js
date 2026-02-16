@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
 
 const createPayload = (user) => {
-  return { name: user.name, userId: user.userId ?? user.id, role: user.role };
+  return { userId: user.userId, role: user.role };
 };
 
 const createAccessJWT = (payload) => {
