@@ -10,11 +10,16 @@ import {
   deleteUserAccount,
 } from '../controllers/user.js';
 
-router.get('/', getAllUsers);
-router.get('/me', showMe);
-router.patch('/me', updateUser);
-router.patch('/update-password', updatePasswordUser);
-router.delete('/delete-account', deleteUserAccount);
-router.get('/:id', getUser);
+import {
+  authenticateUser,
+  authorizePermissions,
+} from '../middlewares/authitication.js';
+
+router.get('/', authenticateUser, authorizePermissions('admin'), getAllUsers);
+router.get('/me', authenticateUser, showMe);
+router.patch('/me', authenticateUser, updateUser);
+router.patch('/update-password', authenticateUser, updatePasswordUser);
+router.delete('/delete-account', authenticateUser, deleteUserAccount);
+router.get('/:id', authenticateUser, authorizePermissions('admin'), getUser);
 
 export default router;
