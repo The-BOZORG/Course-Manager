@@ -5,7 +5,7 @@ const app = express();
 import database from './configs/dbConfig.js';
 
 //router
-import userRoute from './routes/user.js';
+import authRoute from './routes/user.js';
 
 //middlewares
 import errorHandler from './errors/errorHandler.js';
@@ -26,7 +26,7 @@ app.use(helmet());
 
 //routes
 app.use(generalLimiter);
-app.use('/auth', authLimiter, userRoute);
+app.use('/auth', authLimiter, authRoute);
 
 app.use(errorHandler);
 app.use(notFound);
@@ -39,7 +39,7 @@ const startServer = async () => {
     console.log('Mysql connection successfully 🟢'.green);
 
     await database.sync({ force: true });
-    console.log('Models force-synced successfully 🟢'.green);
+    console.log('Models synced successfully 🟢'.green);
 
     app.listen(PORT, () => {
       console.log(`Server running in http://localhost:${PORT}`.cyan.bold);

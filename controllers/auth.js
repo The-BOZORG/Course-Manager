@@ -5,7 +5,7 @@ import {
   registerService,
   loginService,
   logoutService,
-} from '../services/user.js';
+} from '../services/auth.js';
 
 // REGISTER
 const register = catchAsync(async (req, res) => {
@@ -14,7 +14,10 @@ const register = catchAsync(async (req, res) => {
   });
 
   if (error) {
-    throw new CustomError(error.details.map((item) => item.message).join(', '), 400);
+    throw new CustomError(
+      error.details.map((item) => item.message).join(', '),
+      400,
+    );
   }
 
   const { user, accessToken } = await registerService({
@@ -43,7 +46,10 @@ const login = catchAsync(async (req, res) => {
   });
 
   if (error) {
-    throw new CustomError(error.details.map((item) => item.message).join(', '), 400);
+    throw new CustomError(
+      error.details.map((item) => item.message).join(', '),
+      400,
+    );
   }
 
   const { user, accessToken } = await loginService({
