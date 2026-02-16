@@ -24,6 +24,7 @@ const register = catchAsync(async (req, res) => {
     body: req.body,
     ip: req.ip,
     res,
+    userAgent: req.get('user-agent'),
   });
 
   res.status(201).json({
@@ -56,6 +57,7 @@ const login = catchAsync(async (req, res) => {
     body: req.body,
     ip: req.ip,
     res,
+    userAgent: req.get('user-agent'),
   });
 
   res.status(200).json({
@@ -77,6 +79,7 @@ const logout = catchAsync(async (req, res) => {
   await logoutService({
     refreshToken,
     ip: req.ip,
+    userAgent: req.get('user-agent'),
   });
 
   res.clearCookie('refreshToken', {

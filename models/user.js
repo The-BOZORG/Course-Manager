@@ -37,8 +37,8 @@ const User = database.define(
       allowNull: false,
       validate: {
         len: {
-          args: [6, 30],
-          msg: 'password must be 6-30 characters',
+          args: [6, 72],
+          msg: 'password must be 6-72 characters',
         },
       },
     },

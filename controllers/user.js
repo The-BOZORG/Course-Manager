@@ -1,13 +1,12 @@
-import catchAsync from '../utils/catchAsync';
-import CustomError from '../errors/customError';
+import catchAsync from '../utils/catchAsync.js';
+import CustomError from '../errors/customError.js';
 import {
   getUserById,
   getAllUsersByRole,
-  getCurrentUser,
   updateCurrentUser,
   updateUserPassword,
   deleteUser,
-} from '../services/userService';
+} from '../services/user.js';
 
 //@protect(only admin)
 const getUser = catchAsync(async (req, res) => {
@@ -25,8 +24,7 @@ const getAllUsers = catchAsync(async (req, res) => {
 
 //@protect
 const showMe = catchAsync(async (req, res) => {
-  const user = await getCurrentUser(req.user.userId);
-  res.status(200).json({ status: 'success', data: user });
+  res.status(200).json({ status: 'success', data: req.user });
 });
 
 //@protect
@@ -45,6 +43,7 @@ const updatePasswordUser = catchAsync(async (req, res) => {
   if (!oldPassword || !newPassword) {
     throw new CustomError('please provide both password', 400);
   }
+
   await updateUserPassword(req.user.userId, oldPassword, newPassword);
   res
     .status(200)
@@ -58,9 +57,21 @@ const deleteUserAccount = catchAsync(async (req, res) => {
     throw new CustomError('please provide password', 400);
   }
   await deleteUser(req.user.userId, password);
+
+  res.clearCookie('refreshToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
+  res.clearCookie('accessToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+  });
+
   res
     .status(200)
-    .json({ status: 'success', message: 'Delete account successful' });
+    .json({ status: 'success', message: 'delete account successful' });
 });
 
 export {

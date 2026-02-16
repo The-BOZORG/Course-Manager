@@ -1,5 +1,6 @@
-import User from '../models/user';
-import CustomError from '../errors/customError';
+import User from '../models/user.js';
+import Token from '../models/token.js';
+import CustomError from '../errors/customError.js';
 
 export const getUserById = async (id) => {
   const user = await User.findByPk(id, {
@@ -19,17 +20,6 @@ export const getAllUsersByRole = async (role = 'user') => {
   return users;
 };
 
-export const getCurrentUser = async (userId) => {
-  const user = await User.findOne({
-    where: { id: userId },
-    attributes: { exclude: ['password'] },
-  });
-  if (!user) {
-    throw new CustomError('User not found', 404);
-  }
-  return user;
-};
-
 export const updateCurrentUser = async (userId, data) => {
   const user = await User.findOne({
     where: { id: userId },
@@ -45,7 +35,7 @@ export const updateCurrentUser = async (userId, data) => {
 };
 
 export const updateUserPassword = async (userId, oldPassword, newPassword) => {
-  const user = await User.scope('withPassword').findOne({
+  const user = await User.findOne({
     where: { id: userId },
   });
 
@@ -64,7 +54,7 @@ export const updateUserPassword = async (userId, oldPassword, newPassword) => {
 };
 
 export const deleteUser = async (userId, password) => {
-  const user = await User.scope('withPassword').findByPk(userId);
+  const user = await User.findByPk(userId);
 
   if (!user) {
     throw new CustomError('User not found', 404);
@@ -75,6 +65,12 @@ export const deleteUser = async (userId, password) => {
     throw new CustomError('Invalid password', 401);
   }
 
+  await Token.destroy({
+    where: { userId },
+    force: true,
+  });
+
   await user.destroy();
   return true;
 };
+
