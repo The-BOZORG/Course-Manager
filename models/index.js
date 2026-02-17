@@ -39,4 +39,16 @@ Token.belongsTo(User, {
   as: 'user',
 });
 
+// User ↔ Course
+User.hasMany(Course, {
+  foreignKey: 'instructorId',
+  as: 'courses',
+  onDelete: 'CASCADE',
+});
+
+Course.belongsTo(User, {
+  foreignKey: 'instructorId',
+  as: 'instructor',
+});
+
 export { User, Token, Course, Enrollment };

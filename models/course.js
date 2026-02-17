@@ -20,7 +20,6 @@ const Course = database.define(
     slug: {
       type: DataTypes.STRING,
       unique: true,
-      allowNull: false,
     },
 
     description: {
@@ -53,7 +52,6 @@ const Course = database.define(
   {
     tableName: 'courses',
     timestamps: true,
-    paranoid: false,
   },
 );
 
