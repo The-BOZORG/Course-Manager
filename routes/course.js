@@ -28,11 +28,7 @@ router
 router.post(
   '/:id/thumbnail',
   authenticateUser,
-  upload.fields([
-    { name: 'thumbnail', maxCount: 1 },
-    { name: 'file', maxCount: 1 },
-    { name: 'image', maxCount: 1 },
-  ]),
+  upload.single('thumbnail'),
   uploadThumbnail,
 );
 

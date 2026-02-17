@@ -1,4 +1,5 @@
 import catchAsync from '../utils/catchAsync.js';
+import CustomError from '../errors/customError.js';
 import {
   createNewCourse,
   deleteExistingCourse,
@@ -59,11 +60,10 @@ const deleteCourse = catchAsync(async (req, res) => {
 
 const uploadThumbnail = catchAsync(async (req, res) => {
   const { id: courseId } = req.params;
-  const file =
-    req.files?.thumbnail?.[0] ??
-    req.files?.file?.[0] ??
-    req.files?.image?.[0] ??
-    null;
+  const file = req.file;
+  if (!file) {
+    throw new CustomError('Thumbnail file is required', 400);
+  }
 
   const thumbnail = await uploadCourseThumbnail(
     courseId,
@@ -86,3 +86,4 @@ export {
   uploadThumbnail,
   updateCourse,
 };
+
