@@ -3,11 +3,11 @@ import User from '../models/user.js';
 import Enrollment from '../models/enrollment.js';
 import CustomError from '../errors/customError.js';
 
-const findAllCourses = async () => {
+export const findAllCourses = async () => {
   return await Course.findAll();
 };
 
-const findCourseById = async (courseId) => {
+export const findCourseById = async (courseId) => {
   const course = await Course.findByPk(courseId, {
     include: [
       {
@@ -29,14 +29,14 @@ const findCourseById = async (courseId) => {
   return course;
 };
 
-const createNewCourse = async (data, userId) => {
+export const createNewCourse = async (data, userId) => {
   return await Course.create({
     ...data,
     instructorId: userId,
   });
 };
 
-const updateExistingCourse = async (courseId, data, userId) => {
+export const updateExistingCourse = async (courseId, data, userId) => {
   const course = await Course.findByPk(courseId);
   if (!course) {
     throw new CustomError(`course not found with id ${courseId}`, 404);
@@ -50,7 +50,7 @@ const updateExistingCourse = async (courseId, data, userId) => {
   return course;
 };
 
-const deleteExistingCourse = async (courseId, userId) => {
+export const deleteExistingCourse = async (courseId, userId) => {
   const course = await Course.findByPk(courseId);
 
   if (!course) {
@@ -64,7 +64,7 @@ const deleteExistingCourse = async (courseId, userId) => {
   await course.destroy();
 };
 
-const uploadCourseThumbnail = async (courseId, userId, file) => {
+export const uploadCourseThumbnail = async (courseId, userId, file) => {
   const course = await Course.findByPk(courseId);
 
   if (!course) {
@@ -83,13 +83,4 @@ const uploadCourseThumbnail = async (courseId, userId, file) => {
   await course.save();
 
   return course.thumbnail;
-};
-
-export {
-  createNewCourse,
-  deleteExistingCourse,
-  findAllCourses,
-  findCourseById,
-  updateExistingCourse,
-  uploadCourseThumbnail,
 };

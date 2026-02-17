@@ -38,11 +38,7 @@ const errorHandler = (err, req, res, next) => {
 
   //multer errors
   if (err.name === 'MulterError') {
-    if (err.code === 'LIMIT_FILE_SIZE') {
-      error = new CustomError('Image size is too large (max 2MB)', 400);
-    } else {
-      error = new CustomError(err.message, 400);
-    }
+    error = new CustomError(err.message, 400);
   }
 
   const statusCode = error.statusCode || 500;

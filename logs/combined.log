@@ -5,3 +5,21 @@
 {"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:17:33:10 +0000] \"POST /auth/register HTTP/1.1\" 400 30 \"-\" \"vscode-restclient\"","timestamp":"2026-02-17T17:33:10.498Z"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:17:34:42 +0000] \"POST /auth/register HTTP/1.1\" 201 307 \"-\" \"vscode-restclient\"","timestamp":"2026-02-17T17:34:42.003Z"}
 {"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:17:34:46 +0000] \"POST /auth/register HTTP/1.1\" 400 30 \"-\" \"vscode-restclient\"","timestamp":"2026-02-17T17:34:46.231Z"}
+{"level":"info","message":"::1 - - [17/Feb/2026:17:52:49 +0000] \"GET / HTTP/1.1\" 404 20 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36\"","timestamp":"2026-02-17T17:52:49.943Z"}
+{"level":"info","message":"::1 - - [17/Feb/2026:17:52:50 +0000] \"GET /favicon.ico HTTP/1.1\" 404 20 \"-\" \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36\"","timestamp":"2026-02-17T17:52:50.307Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:16:01 +0000] \"POST /auth/register HTTP/1.1\" 500 68 \"-\" \"-\"","timestamp":"2026-02-17T18:16:01.732Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:16:01 +0000] \"POST /auth/login HTTP/1.1\" 500 68 \"-\" \"-\"","timestamp":"2026-02-17T18:16:01.750Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:16:46 +0000] \"POST /auth/register HTTP/1.1\" 400 47 \"-\" \"-\"","timestamp":"2026-02-17T18:16:46.049Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:16:46 +0000] \"POST /auth/login HTTP/1.1\" 500 71 \"-\" \"-\"","timestamp":"2026-02-17T18:16:46.146Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:17:12 +0000] \"POST /auth/register HTTP/1.1\" 400 47 \"-\" \"-\"","timestamp":"2026-02-17T18:17:12.089Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:17:12 +0000] \"POST /auth/login HTTP/1.1\" 500 71 \"-\" \"-\"","timestamp":"2026-02-17T18:17:12.158Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:17:33 +0000] \"POST /auth/register HTTP/1.1\" 201 304 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:17:33.070Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:17:33 +0000] \"POST /auth/login HTTP/1.1\" 200 269 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:17:33.369Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:20:42 +0000] \"POST /auth/register HTTP/1.1\" 201 304 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:20:42.808Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:20:43 +0000] \"POST /auth/login HTTP/1.1\" 200 269 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:20:43.051Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:23:25 +0000] \"POST /auth/register HTTP/1.1\" 201 304 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:23:25.842Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:23:26 +0000] \"POST /auth/login HTTP/1.1\" 200 269 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:23:26.050Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:31:40 +0000] \"POST /auth/register HTTP/1.1\" 201 304 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:31:40.981Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:31:41 +0000] \"POST /auth/login HTTP/1.1\" 200 269 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:31:41.200Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:38:28 +0000] \"POST /auth/register HTTP/1.1\" 201 304 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:38:28.053Z"}
+{"level":"info","message":"::ffff:127.0.0.1 - - [17/Feb/2026:18:38:28 +0000] \"POST /auth/login HTTP/1.1\" 200 269 \"-\" \"jest-test-agent\"","timestamp":"2026-02-17T18:38:28.232Z"}

@@ -1,10 +1,6 @@
 import express from 'express';
 const app = express();
 
-//config
-import database from './configs/dbConfig.js';
-import logger from './configs/winstonConfig.js';
-
 //router
 import authRoute from './routes/auth.js';
 import userRoute from './routes/user.js';
@@ -19,7 +15,7 @@ import { generalLimiter, authLimiter } from './utils/rateLimiter.js';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
-import colors from 'colors';
+import logger from './configs/winstonConfig.js';
 
 app.use(morgan('dev'));
 app.use(
@@ -44,37 +40,4 @@ app.use('/course', courseRoute);
 app.use(errorHandler);
 app.use(notFound);
 
-//server
-const PORT = process.env.PORT || 5000;
-const startServer = async () => {
-  try {
-    await database.authenticate();
-    console.log('Mysql connection successfully 🟢'.green);
-
-    await database.sync({ force: true });
-    console.log('Models synced successfully 🟢'.green);
-
-    app.listen(PORT, () => {
-      console.log(`Server running in http://localhost:${PORT}`.cyan.bold);
-    });
-  } catch (error) {
-    console.error('Database connection failed 🔴', error.message.red);
-    process.exit(1);
-  }
-};
-
-const closeDB = async () => {
-  console.log('Closing DB...'.red.bold);
-  try {
-    await database.close();
-    console.log('DB closed 🔴'.red);
-  } catch (err) {
-    console.error('Error closing DB:', err.red);
-  }
-  process.exit(0);
-};
-
-process.on('SIGINT', closeDB);
-process.on('SIGTERM', closeDB);
-
-startServer();
+export default app;
