@@ -62,7 +62,7 @@ const uploadThumbnail = catchAsync(async (req, res) => {
   const { id: courseId } = req.params;
   const file = req.file;
   if (!file) {
-    throw new CustomError('Thumbnail file is required', 400);
+    throw new CustomError('thumbnail file is required', 400);
   }
 
   const thumbnail = await uploadCourseThumbnail(
@@ -86,4 +86,3 @@ export {
   uploadThumbnail,
   updateCourse,
 };
-

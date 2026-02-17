@@ -16,3 +16,15 @@ Content-Type: application/json
     "email":"nagi@yahoo.com",
     "password": "123456"
 }
+
+### upload thumbnail
+POST http://localhost:3000/course/1/thumbnail
+Authorization: Bearer YOUR_TOKEN
+Content-Type: multipart/form-data; boundary=MyBoundary
+
+--MyBoundary
+Content-Disposition: form-data; name="thumbnail"; filename="cover.jpg"
+Content-Type: image/jpeg
+
+< ./cover.jpg
+--MyBoundary--

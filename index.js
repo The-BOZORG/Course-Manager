@@ -1,9 +1,9 @@
 import express from 'express';
 const app = express();
 
-//db
+//config
 import database from './configs/dbConfig.js';
-import './models/index.js';
+import logger from './configs/winstonConfig.js';
 
 //router
 import authRoute from './routes/auth.js';
@@ -21,11 +21,18 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import colors from 'colors';
 
+app.use(morgan('dev'));
+app.use(
+  morgan('combined', {
+    stream: {
+      write: (message) => logger.info(message.trim()),
+    },
+  }),
+);
 app.use('/uploads', express.static('uploads'));
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false, limit: '10kb' }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.use(morgan('dev'));
 app.use(helmet());
 
 //routes

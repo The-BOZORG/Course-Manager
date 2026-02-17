@@ -68,15 +68,15 @@ const uploadCourseThumbnail = async (courseId, userId, file) => {
   const course = await Course.findByPk(courseId);
 
   if (!course) {
-    throw new CustomError(`Course not found with id ${courseId}`, 404);
+    throw new CustomError(`course not found with id ${courseId}`, 404);
   }
 
   if (Number(course.instructorId) !== Number(userId)) {
-    throw new CustomError('You are not allowed to update this course', 403);
+    throw new CustomError('you are not allowed to update this course', 403);
   }
 
   if (!file) {
-    throw new CustomError('No file uploaded', 400);
+    throw new CustomError('no file uploaded', 400);
   }
 
   course.thumbnail = file.filename;
