@@ -50,6 +50,10 @@ const User = database.define(
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    instructorRequestStatus: {
+      type: DataTypes.ENUM('none', 'pending', 'approved', 'rejected'),
+      defaultValue: 'none',
+    },
   },
   {
     tableName: 'users',

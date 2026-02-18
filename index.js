@@ -5,6 +5,7 @@ const app = express();
 import authRoute from './routes/auth.js';
 import userRoute from './routes/user.js';
 import courseRoute from './routes/course.js';
+import adminRoute from './routes/admin.js';
 
 //middlewares
 import errorHandler from './errors/errorHandler.js';
@@ -36,6 +37,7 @@ app.use(generalLimiter);
 app.use('/auth', authLimiter, authRoute);
 app.use('/user', userRoute);
 app.use('/course', courseRoute);
+app.use('/admin', adminRoute);
 
 app.use(errorHandler);
 app.use(notFound);

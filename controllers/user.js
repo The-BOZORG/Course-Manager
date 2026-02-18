@@ -4,12 +4,12 @@ import {
   getUserById,
   updateCurrentUser,
   updateUserPassword,
+  requestInstructorService,
   deleteUser,
 } from '../services/user.js';
 
 import checkPermissions from '../utils/permission.js';
 
-//@protect
 const getUser = catchAsync(async (req, res) => {
   const user = await getUserById(req.params.id);
 
@@ -18,12 +18,10 @@ const getUser = catchAsync(async (req, res) => {
   res.status(200).json({ status: 'success', data: user });
 });
 
-//@protect
 const showMe = catchAsync(async (req, res) => {
   res.status(200).json({ status: 'success', data: req.user });
 });
 
-//@protect
 const updateUser = catchAsync(async (req, res) => {
   const { name, email } = req.body;
   if (!email || !name) {
@@ -33,7 +31,6 @@ const updateUser = catchAsync(async (req, res) => {
   res.status(200).json({ status: 'success', data: user });
 });
 
-//@protect
 const updatePasswordUser = catchAsync(async (req, res) => {
   const { oldPassword, newPassword } = req.body;
   if (!oldPassword || !newPassword) {
@@ -46,15 +43,11 @@ const updatePasswordUser = catchAsync(async (req, res) => {
     .json({ status: 'success', message: 'Password updated successfully' });
 });
 
-//@protect
 const requestInstructor = catchAsync(async (req, res) => {
-  const user = await User.findByPk(req.user.id);
-  user.wantsToBeInstructor = true;
-  await user.save();
-  res.json({ message: 'your request has been registered!' });
+  const result = await requestInstructorService(req.user.userId);
+  res.status(200).json(result);
 });
 
-//@protect
 const deleteUserAccount = catchAsync(async (req, res) => {
   const { password } = req.body;
   if (!password) {
@@ -78,4 +71,11 @@ const deleteUserAccount = catchAsync(async (req, res) => {
     .json({ status: 'success', message: 'delete account successful' });
 });
 
-export { getUser, showMe, updateUser, updatePasswordUser, deleteUserAccount };
+export {
+  getUser,
+  showMe,
+  updateUser,
+  updatePasswordUser,
+  requestInstructor,
+  deleteUserAccount,
+};

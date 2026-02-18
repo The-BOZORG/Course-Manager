@@ -1,11 +1,14 @@
-import User from '../models/user';
-import Course from '../models/course';
-import catchAsync from '../utils/catchAsync';
+import catchAsync from '../utils/catchAsync.js';
+import {
+  getAllUsersService,
+  getPendingInstructorRequestsService,
+  deleteUserService,
+  approveInstructorService,
+  rejectInstructorService,
+} from '../services/admin.js';
 
 const getAllUsers = catchAsync(async (req, res) => {
-  const users = await User.findAll({
-    attributes: { exclude: ['password'] },
-  });
+  const users = await getAllUsersService();
 
   res.status(200).json({
     results: users.length,
@@ -13,53 +16,18 @@ const getAllUsers = catchAsync(async (req, res) => {
   });
 });
 
-const getAllCourses = catchAsync(async (req, res) => {
-  const courses = await Course.findAll({
-    include: [
-      {
-        model: User,
-        attributes: ['id', 'name', 'email'],
-      },
-    ],
-  });
-
-  res.status(200).json({
-    results: courses.length,
-    courses,
-  });
-});
-
 const deleteUser = catchAsync(async (req, res) => {
-  const user = await User.findByPk(req.params.id);
+  const { id } = req.params;
 
-  if (!user) {
-    return res.status(404).json({ message: 'user not found' });
-  }
+  await deleteUserService(id);
 
-  await user.destroy();
-
-  res.status(204).json({
-    message: 'user deleted successfully',
-  });
+  res.status(204).json({ message: 'user deleted successfully' });
 });
 
 const approveInstructor = catchAsync(async (req, res) => {
-  const user = await User.findByPk(req.params.id);
+  const { id } = req.params;
 
-  if (!user) {
-    return res.status(404).json({ message: 'user not found' });
-  }
-
-  if (!user.wantsToBeInstructor) {
-    return res
-      .status(400)
-      .json({ message: 'user did not request instructor role' });
-  }
-
-  user.role = 'instructor';
-  user.wantsToBeInstructor = false;
-
-  await user.save();
+  const user = await approveInstructorService(id);
 
   res.status(200).json({
     message: 'user approved as instructor',
@@ -67,4 +35,30 @@ const approveInstructor = catchAsync(async (req, res) => {
   });
 });
 
-export { getAllUsers, getAllCourses, deleteUser, approveInstructor };
+const rejectInstructor = catchAsync(async (req, res) => {
+  const { id } = req.params;
+
+  const user = await rejectInstructorService(id);
+
+  res.status(200).json({
+    message: 'instructor request rejected',
+    user,
+  });
+});
+
+const getPendingInstructorRequests = catchAsync(async (req, res) => {
+  const users = await getPendingInstructorRequestsService();
+
+  res.status(200).json({
+    results: users.length,
+    users,
+  });
+});
+
+export {
+  getAllUsers,
+  getPendingInstructorRequests,
+  deleteUser,
+  approveInstructor,
+  rejectInstructor,
+};

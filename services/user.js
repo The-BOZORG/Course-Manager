@@ -45,6 +45,28 @@ export const updateUserPassword = async (userId, oldPassword, newPassword) => {
   return true;
 };
 
+export const requestInstructorService = async (userId) => {
+  const user = await User.findByPk(userId);
+
+  if (!user) {
+    throw new CustomError('user not found', 404);
+  }
+
+  if (user.role === 'instructor') {
+    throw new CustomError('you are already an instructor', 400);
+  }
+
+  if (user.instructorRequestStatus === 'pending') {
+    throw new CustomError('your instructor request is already pending', 400);
+  }
+
+  user.wantsToBeInstructor = true;
+  user.instructorRequestStatus = 'pending';
+  await user.save();
+
+  return { message: 'your request has been registered!' };
+};
+
 export const deleteUser = async (userId, password) => {
   const user = await User.findByPk(userId);
 
