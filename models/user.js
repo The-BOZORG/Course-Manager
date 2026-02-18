@@ -37,14 +37,18 @@ const User = database.define(
       allowNull: false,
       validate: {
         len: {
-          args: [6, 72],
-          msg: 'password must be 6-72 characters',
+          args: [6, 30],
+          msg: 'password must be 6-30 characters',
         },
       },
     },
     role: {
-      type: DataTypes.ENUM('admin', 'user'),
+      type: DataTypes.ENUM('admin', 'user', 'instructor'),
       defaultValue: 'user',
+    },
+    wantsToBeInstructor: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {

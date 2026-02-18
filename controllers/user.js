@@ -2,24 +2,20 @@ import catchAsync from '../utils/catchAsync.js';
 import CustomError from '../errors/customError.js';
 import {
   getUserById,
-  getAllUsersByRole,
   updateCurrentUser,
   updateUserPassword,
   deleteUser,
 } from '../services/user.js';
 
-//@protect(only admin)
+import checkPermissions from '../utils/permission.js';
+
+//@protect
 const getUser = catchAsync(async (req, res) => {
   const user = await getUserById(req.params.id);
-  res.status(200).json({ status: 'success', data: user });
-});
 
-//@protect(only admin)
-const getAllUsers = catchAsync(async (req, res) => {
-  const users = await getAllUsersByRole('user');
-  res
-    .status(200)
-    .json({ status: 'success', results: users.length, data: users });
+  checkPermissions(req.user, req.params.id);
+
+  res.status(200).json({ status: 'success', data: user });
 });
 
 //@protect
@@ -51,6 +47,14 @@ const updatePasswordUser = catchAsync(async (req, res) => {
 });
 
 //@protect
+const requestInstructor = catchAsync(async (req, res) => {
+  const user = await User.findByPk(req.user.id);
+  user.wantsToBeInstructor = true;
+  await user.save();
+  res.json({ message: 'your request has been registered!' });
+});
+
+//@protect
 const deleteUserAccount = catchAsync(async (req, res) => {
   const { password } = req.body;
   if (!password) {
@@ -74,11 +78,4 @@ const deleteUserAccount = catchAsync(async (req, res) => {
     .json({ status: 'success', message: 'delete account successful' });
 });
 
-export {
-  getUser,
-  getAllUsers,
-  showMe,
-  updateUser,
-  updatePasswordUser,
-  deleteUserAccount,
-};
+export { getUser, showMe, updateUser, updatePasswordUser, deleteUserAccount };

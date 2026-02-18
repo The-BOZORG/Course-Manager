@@ -1,6 +1,5 @@
 import Course from '../models/course.js';
 import User from '../models/user.js';
-import Enrollment from '../models/enrollment.js';
 import CustomError from '../errors/customError.js';
 
 export const findAllCourses = async () => {
@@ -12,12 +11,8 @@ export const findCourseById = async (courseId) => {
     include: [
       {
         model: User,
-        as: 'instructor',
+        as: 'user',
         attributes: ['id', 'name', 'email'],
-      },
-      {
-        model: Enrollment,
-        as: 'enrollments',
       },
     ],
   });

@@ -12,14 +12,6 @@ export const getUserById = async (id) => {
   return user;
 };
 
-export const getAllUsersByRole = async (role = 'user') => {
-  const users = await User.findAll({
-    where: { role },
-    attributes: { exclude: ['password'] },
-  });
-  return users;
-};
-
 export const updateCurrentUser = async (userId, data) => {
   const user = await User.findOne({
     where: { id: userId },
@@ -73,4 +65,3 @@ export const deleteUser = async (userId, password) => {
   await user.destroy();
   return true;
 };
-
