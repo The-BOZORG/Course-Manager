@@ -1,6 +1,5 @@
 import catchAsync from '../utils/catchAsync.js';
 import CustomError from '../errors/customError.js';
-import checkPermissions from '../utils/permission.js';
 
 import {
   createNewCourse,
@@ -25,8 +24,6 @@ const getCourse = catchAsync(async (req, res) => {
   const { id: courseId } = req.params;
   const course = await findCourseById(courseId);
 
-  checkPermissions(req.user, req.params.id);
-
   res.status(200).json({ data: course });
 });
 
@@ -45,9 +42,8 @@ const updateCourse = catchAsync(async (req, res) => {
     courseId,
     req.body,
     req.user.userId,
+    req.user.role,
   );
-
-  checkPermissions(req.user, req.params.id);
 
   res.status(200).json({
     status: 'success',
@@ -57,9 +53,7 @@ const updateCourse = catchAsync(async (req, res) => {
 
 const deleteCourse = catchAsync(async (req, res) => {
   const { id: courseId } = req.params;
-  await deleteExistingCourse(courseId, req.user.userId);
-
-  checkPermissions(req.user, req.params.id);
+  await deleteExistingCourse(courseId, req.user.userId, req.user.role);
 
   res.status(204).json({
     status: 'success',
@@ -76,10 +70,9 @@ const uploadThumbnail = catchAsync(async (req, res) => {
   const thumbnail = await uploadCourseThumbnail(
     courseId,
     req.user.userId,
+    req.user.role,
     file,
   );
-
-  checkPermissions(req.user, req.params.id);
 
   res.status(200).json({
     status: 'success',

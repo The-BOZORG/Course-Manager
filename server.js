@@ -1,5 +1,6 @@
 import database from './configs/dbConfig.js';
 import app from './index.js';
+import './models/index.js';
 
 import colors from 'colors';
 

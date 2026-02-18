@@ -17,6 +17,8 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import logger from './configs/winstonConfig.js';
+import swaggerUi from 'swagger-ui-express';
+import specs from './configs/swagger.js';
 
 app.use(morgan('dev'));
 app.use(
@@ -38,6 +40,9 @@ app.use('/auth', authLimiter, authRoute);
 app.use('/user', userRoute);
 app.use('/course', courseRoute);
 app.use('/admin', adminRoute);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
+app.get('/', (req, res) => res.redirect('/api-docs'));
 
 app.use(errorHandler);
 app.use(notFound);

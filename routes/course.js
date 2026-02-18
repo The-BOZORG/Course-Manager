@@ -12,22 +12,38 @@ import {
   uploadThumbnail,
 } from '../controllers/course.js';
 
-import { authenticateUser } from '../middlewares/authitication.js';
+import {
+  authenticateUser,
+  authorizePermissions,
+} from '../middlewares/authitication.js';
 
 router
   .route('/')
   .get(authenticateUser, getAllCourse)
-  .post(authenticateUser, createCourse);
+  .post(
+    authenticateUser,
+    authorizePermissions('instructor', 'admin'),
+    createCourse,
+  );
 
 router
   .route('/:id')
   .get(authenticateUser, getCourse)
-  .put(authenticateUser, updateCourse)
-  .delete(authenticateUser, deleteCourse);
+  .put(
+    authenticateUser,
+    authorizePermissions('instructor', 'admin'),
+    updateCourse,
+  )
+  .delete(
+    authenticateUser,
+    authorizePermissions('instructor', 'admin'),
+    deleteCourse,
+  );
 
 router.post(
   '/:id/thumbnail',
   authenticateUser,
+  authorizePermissions('instructor', 'admin'),
   upload.single('thumbnail'),
   uploadThumbnail,
 );

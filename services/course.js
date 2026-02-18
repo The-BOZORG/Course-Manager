@@ -11,7 +11,7 @@ export const findCourseById = async (courseId) => {
     include: [
       {
         model: User,
-        as: 'user',
+        as: 'instructor',
         attributes: ['id', 'name', 'email'],
       },
     ],
@@ -31,13 +31,13 @@ export const createNewCourse = async (data, userId) => {
   });
 };
 
-export const updateExistingCourse = async (courseId, data, userId) => {
+export const updateExistingCourse = async (courseId, data, userId, userRole) => {
   const course = await Course.findByPk(courseId);
   if (!course) {
     throw new CustomError(`course not found with id ${courseId}`, 404);
   }
 
-  if (Number(course.instructorId) !== Number(userId)) {
+  if (userRole !== 'admin' && Number(course.instructorId) !== Number(userId)) {
     throw new CustomError('you are not allowed to update this course', 403);
   }
 
@@ -45,28 +45,28 @@ export const updateExistingCourse = async (courseId, data, userId) => {
   return course;
 };
 
-export const deleteExistingCourse = async (courseId, userId) => {
+export const deleteExistingCourse = async (courseId, userId, userRole) => {
   const course = await Course.findByPk(courseId);
 
   if (!course) {
     throw new CustomError(`course not found with id ${courseId}`, 404);
   }
 
-  if (Number(course.instructorId) !== Number(userId)) {
+  if (userRole !== 'admin' && Number(course.instructorId) !== Number(userId)) {
     throw new CustomError('you are not allowed to delete this course', 403);
   }
 
   await course.destroy();
 };
 
-export const uploadCourseThumbnail = async (courseId, userId, file) => {
+export const uploadCourseThumbnail = async (courseId, userId, userRole, file) => {
   const course = await Course.findByPk(courseId);
 
   if (!course) {
     throw new CustomError(`course not found with id ${courseId}`, 404);
   }
 
-  if (Number(course.instructorId) !== Number(userId)) {
+  if (userRole !== 'admin' && Number(course.instructorId) !== Number(userId)) {
     throw new CustomError('you are not allowed to update this course', 403);
   }
 
