@@ -28,7 +28,7 @@ This project includes:
 
 ```text
 Course Manager/
-  configs/         # Database connection and logger config
+  configs/         # Database connection and logger and swagger config
   controllers/     # HTTP handlers
   middlewares/     # Auth and authorization middlewares
   models/          # Sequelize models and associations
@@ -107,17 +107,20 @@ Core rules:
 ## API Documentation (Swagger)
 
 Swagger is configured and mounted in the app:
+
 - Swagger setup file: `configs/swagger.js`
 - Swagger UI route: `/api-docs`
 - Home route (`/`) redirects to `/api-docs`
 - Centralized route docs file: `docs/swagger.docs.js`
 
 How to use:
+
 1. Start the server with `npm start`
 2. Open `http://localhost:3000` (or `http://localhost:3000/api-docs`)
 3. For protected endpoints, call `/auth/login` first so auth cookies are set
 
 Notes:
+
 - Route annotations are centralized in `docs/swagger.docs.js` (not inside route files).
 - Swagger scans docs using `apis: ['./docs/*.js']`.
 
