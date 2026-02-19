@@ -186,7 +186,7 @@ export {};
  * @swagger
  * /user/{id}:
  *   get:
- *     summary: Get user by id (admin or owner)
+ *     summary: Get user by id
  *     tags: [User]
  *     parameters:
  *       - in: path
