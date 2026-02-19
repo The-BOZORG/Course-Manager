@@ -1,84 +1,3 @@
-/**
- * @swagger
- * components:
- *   securitySchemes:
- *     cookieAuth:
- *       type: apiKey
- *       in: cookie
- *       name: accessToken
- *   schemas:
- *     RegisterInput:
- *       type: object
- *       required: [name, email, password]
- *       properties:
- *         name:
- *           type: string
- *           example: ali
- *         email:
- *           type: string
- *           format: email
- *           example: ali@test.com
- *         password:
- *           type: string
- *           example: "123456"
- *     LoginInput:
- *       type: object
- *       required: [email, password]
- *       properties:
- *         email:
- *           type: string
- *           format: email
- *           example: ali@test.com
- *         password:
- *           type: string
- *           example: "123456"
- *     UpdateUserInput:
- *       type: object
- *       required: [name, email]
- *       properties:
- *         name:
- *           type: string
- *           example: "Ali Updated"
- *         email:
- *           type: string
- *           format: email
- *           example: "ali.updated@test.com"
- *     UpdatePasswordInput:
- *       type: object
- *       required: [oldPassword, newPassword]
- *       properties:
- *         oldPassword:
- *           type: string
- *           example: "123456"
- *         newPassword:
- *           type: string
- *           example: "654321"
- *     DeleteAccountInput:
- *       type: object
- *       required: [password]
- *       properties:
- *         password:
- *           type: string
- *           example: "123456"
- *     CourseInput:
- *       type: object
- *       required: [title, description]
- *       properties:
- *         title:
- *           type: string
- *           example: "Node.js from Zero"
- *         description:
- *           type: string
- *           example: "Complete Node.js course"
- *         price:
- *           type: integer
- *           example: 100
- *         status:
- *           type: string
- *           enum: [draft, published]
- *           example: draft
- */
-
 export {};
 /**
  * @swagger
@@ -104,7 +23,19 @@ export {};
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RegisterInput'
+ *             type: object
+ *             required: [name, email, password]
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: ali
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: ali@test.com
+ *               password:
+ *                 type: string
+ *                 example: "123456"
  *     responses:
  *       201:
  *         description: User registered successfully
@@ -123,7 +54,16 @@ export {};
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/LoginInput'
+ *             type: object
+ *             required: [email, password]
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: ali@test.com
+ *               password:
+ *                 type: string
+ *                 example: "123456"
  *     responses:
  *       200:
  *         description: Login successful
@@ -137,8 +77,6 @@ export {};
  *   post:
  *     summary: Logout user and clear auth cookies
  *     tags: [Auth]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: Logout successful
@@ -150,8 +88,6 @@ export {};
  *   get:
  *     summary: Get current logged-in user
  *     tags: [User]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: Current user returned
@@ -160,14 +96,21 @@ export {};
  *   patch:
  *     summary: Update current user profile
  *     tags: [User]
- *     security:
- *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UpdateUserInput'
+ *             type: object
+ *             required: [name, email]
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Ali Updated"
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: "ali.updated@test.com"
  *     responses:
  *       200:
  *         description: User updated
@@ -181,14 +124,20 @@ export {};
  *   patch:
  *     summary: Update current user password
  *     tags: [User]
- *     security:
- *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/UpdatePasswordInput'
+ *             type: object
+ *             required: [oldPassword, newPassword]
+ *             properties:
+ *               oldPassword:
+ *                 type: string
+ *                 example: "123456"
+ *               newPassword:
+ *                 type: string
+ *                 example: "654321"
  *     responses:
  *       200:
  *         description: Password updated
@@ -202,8 +151,6 @@ export {};
  *   post:
  *     summary: Submit instructor role request
  *     tags: [User]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: Request registered
@@ -217,14 +164,17 @@ export {};
  *   delete:
  *     summary: Delete current user account
  *     tags: [User]
- *     security:
- *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/DeleteAccountInput'
+ *             type: object
+ *             required: [password]
+ *             properties:
+ *               password:
+ *                 type: string
+ *                 example: "123456"
  *     responses:
  *       200:
  *         description: Account deleted
@@ -238,8 +188,6 @@ export {};
  *   get:
  *     summary: Get user by id (admin or owner)
  *     tags: [User]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -261,22 +209,33 @@ export {};
  *   get:
  *     summary: Get all courses
  *     tags: [Course]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: Courses returned
  *   post:
  *     summary: Create a new course (instructor/admin)
  *     tags: [Course]
- *     security:
- *       - cookieAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CourseInput'
+ *             type: object
+ *             required: [title, description]
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Node.js from Zero"
+ *               description:
+ *                 type: string
+ *                 example: "Complete Node.js course"
+ *               price:
+ *                 type: integer
+ *                 example: 100
+ *               status:
+ *                 type: string
+ *                 enum: [draft, published]
+ *                 example: draft
  *     responses:
  *       201:
  *         description: Course created
@@ -290,8 +249,6 @@ export {};
  *   get:
  *     summary: Get course by id
  *     tags: [Course]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -306,8 +263,6 @@ export {};
  *   put:
  *     summary: Update a course (owner instructor/admin)
  *     tags: [Course]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -319,7 +274,22 @@ export {};
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CourseInput'
+ *             type: object
+ *             required: [title, description]
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 example: "Node.js from Zero"
+ *               description:
+ *                 type: string
+ *                 example: "Complete Node.js course"
+ *               price:
+ *                 type: integer
+ *                 example: 100
+ *               status:
+ *                 type: string
+ *                 enum: [draft, published]
+ *                 example: draft
  *     responses:
  *       200:
  *         description: Course updated
@@ -328,8 +298,6 @@ export {};
  *   delete:
  *     summary: Delete a course (owner instructor/admin)
  *     tags: [Course]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -349,8 +317,6 @@ export {};
  *   post:
  *     summary: Upload course thumbnail (owner instructor/admin)
  *     tags: [Course]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -380,8 +346,6 @@ export {};
  *   get:
  *     summary: Get all users (admin only)
  *     tags: [Admin]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: Users returned
@@ -395,8 +359,6 @@ export {};
  *   get:
  *     summary: Get pending instructor requests (admin only)
  *     tags: [Admin]
- *     security:
- *       - cookieAuth: []
  *     responses:
  *       200:
  *         description: Pending requests returned
@@ -408,8 +370,6 @@ export {};
  *   delete:
  *     summary: Delete user by id (admin only)
  *     tags: [Admin]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -429,8 +389,6 @@ export {};
  *   patch:
  *     summary: Approve instructor request (admin only)
  *     tags: [Admin]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -450,8 +408,6 @@ export {};
  *   patch:
  *     summary: Reject instructor request (admin only)
  *     tags: [Admin]
- *     security:
- *       - cookieAuth: []
  *     parameters:
  *       - in: path
  *         name: id
