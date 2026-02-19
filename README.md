@@ -67,7 +67,7 @@ npm test
 4. Open Swagger UI:
 
 ```text
-http://localhost:3000
+http://localhost:{PORT}
 ```
 
 ## Environment Variables
