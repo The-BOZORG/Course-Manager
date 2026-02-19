@@ -2,22 +2,22 @@ export {};
 /**
  * @swagger
  * tags:
- *   - name: Auth
- *     description: Authentication and session routes
- *   - name: User
- *     description: User profile and account routes
- *   - name: Course
- *     description: Course management routes
- *   - name: Admin
- *     description: Administrative routes
+ *   - name: auth
+ *     description: authentication and session routes
+ *   - name: user
+ *     description: user profile and account routes
+ *   - name: course
+ *     description: course management routes
+ *   - name: admin
+ *     description: administrative routes
  */
 
 /**
  * @swagger
  * /auth/register:
  *   post:
- *     summary: Register a new user
- *     tags: [Auth]
+ *     summary: register a new user
+ *     tags: [auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -38,17 +38,17 @@ export {};
  *                 example: "123456"
  *     responses:
  *       201:
- *         description: User registered successfully
+ *         description: user registered successfully
  *       400:
- *         description: Validation error or email already exists
+ *         description: validation error or email already exists
  */
 
 /**
  * @swagger
  * /auth/login:
  *   post:
- *     summary: Login user and set auth cookies
- *     tags: [Auth]
+ *     summary: login user and set auth cookies
+ *     tags: [auth]
  *     requestBody:
  *       required: true
  *       content:
@@ -66,36 +66,36 @@ export {};
  *                 example: "123456"
  *     responses:
  *       200:
- *         description: Login successful
+ *         description: login successful
  *       401:
- *         description: Invalid credentials
+ *         description: invalid credentials
  */
 
 /**
  * @swagger
  * /auth/logout:
  *   post:
- *     summary: Logout user and clear auth cookies
- *     tags: [Auth]
+ *     summary: logout user and clear auth cookies
+ *     tags: [auth]
  *     responses:
  *       200:
- *         description: Logout successful
+ *         description: logout successful
  */
 
 /**
  * @swagger
  * /user/me:
  *   get:
- *     summary: Get current logged-in user
- *     tags: [User]
+ *     summary: get current logged-in user
+ *     tags: [user]
  *     responses:
  *       200:
- *         description: Current user returned
+ *         description: current user returned
  *       401:
- *         description: Authentication invalid
+ *         description: authentication invalid
  *   patch:
- *     summary: Update current user profile
- *     tags: [User]
+ *     summary: update current user profile
+ *     tags: [user]
  *     requestBody:
  *       required: true
  *       content:
@@ -113,17 +113,17 @@ export {};
  *                 example: "ali.updated@test.com"
  *     responses:
  *       200:
- *         description: User updated
+ *         description: user updated
  *       400:
- *         description: Invalid input
+ *         description: invalid input
  */
 
 /**
  * @swagger
  * /user/update-password:
  *   patch:
- *     summary: Update current user password
- *     tags: [User]
+ *     summary: update current user password
+ *     tags: [user]
  *     requestBody:
  *       required: true
  *       content:
@@ -140,30 +140,30 @@ export {};
  *                 example: "654321"
  *     responses:
  *       200:
- *         description: Password updated
+ *         description: password updated
  *       401:
- *         description: Invalid old password
+ *         description: invalid old password
  */
 
 /**
  * @swagger
  * /user/request-instructor:
  *   post:
- *     summary: Submit instructor role request
- *     tags: [User]
+ *     summary: submit instructor role request
+ *     tags: [user]
  *     responses:
  *       200:
- *         description: Request registered
+ *         description: request registered
  *       400:
- *         description: Request is already pending or user is instructor
+ *         description: request is already pending or user is instructor
  */
 
 /**
  * @swagger
  * /user/delete-account:
  *   delete:
- *     summary: Delete current user account
- *     tags: [User]
+ *     summary: delete current user account
+ *     tags: [user]
  *     requestBody:
  *       required: true
  *       content:
@@ -177,17 +177,17 @@ export {};
  *                 example: "123456"
  *     responses:
  *       200:
- *         description: Account deleted
+ *         description: account deleted
  *       401:
- *         description: Invalid password
+ *         description: invalid password
  */
 
 /**
  * @swagger
  * /user/{id}:
  *   get:
- *     summary: Get user by id
- *     tags: [User]
+ *     summary: get user by id
+ *     tags: [user]
  *     parameters:
  *       - in: path
  *         name: id
@@ -196,25 +196,25 @@ export {};
  *           type: integer
  *     responses:
  *       200:
- *         description: User returned
+ *         description: user returned
  *       403:
- *         description: Not authorized
+ *         description: not authorized
  *       404:
- *         description: User not found
+ *         description: user not found
  */
 
 /**
  * @swagger
  * /course:
  *   get:
- *     summary: Get all courses
- *     tags: [Course]
+ *     summary: get all courses
+ *     tags: [course]
  *     responses:
  *       200:
- *         description: Courses returned
+ *         description: courses returned
  *   post:
- *     summary: Create a new course (instructor/admin)
- *     tags: [Course]
+ *     summary: create a new course (instructor/admin)
+ *     tags: [course]
  *     requestBody:
  *       required: true
  *       content:
@@ -238,17 +238,17 @@ export {};
  *                 example: draft
  *     responses:
  *       201:
- *         description: Course created
+ *         description: course created
  *       403:
- *         description: Unauthorized role
+ *         description: unauthorized role
  */
 
 /**
  * @swagger
  * /course/{id}:
  *   get:
- *     summary: Get course by id
- *     tags: [Course]
+ *     summary: get course by id
+ *     tags: [course]
  *     parameters:
  *       - in: path
  *         name: id
@@ -257,12 +257,12 @@ export {};
  *           type: integer
  *     responses:
  *       200:
- *         description: Course returned
+ *         description: course returned
  *       404:
- *         description: Course not found
+ *         description: course not found
  *   put:
- *     summary: Update a course (owner instructor/admin)
- *     tags: [Course]
+ *     summary: update a course (owner instructor/admin)
+ *     tags: [course]
  *     parameters:
  *       - in: path
  *         name: id
@@ -292,12 +292,12 @@ export {};
  *                 example: draft
  *     responses:
  *       200:
- *         description: Course updated
+ *         description: course updated
  *       403:
- *         description: Not allowed to update this course
+ *         description: not allowed to update this course
  *   delete:
- *     summary: Delete a course (owner instructor/admin)
- *     tags: [Course]
+ *     summary: delete a course (owner instructor/admin)
+ *     tags: [course]
  *     parameters:
  *       - in: path
  *         name: id
@@ -306,17 +306,17 @@ export {};
  *           type: integer
  *     responses:
  *       204:
- *         description: Course deleted
+ *         description: course deleted
  *       403:
- *         description: Not allowed to delete this course
+ *         description: not allowed to delete this course
  */
 
 /**
  * @swagger
  * /course/{id}/thumbnail:
  *   post:
- *     summary: Upload course thumbnail (owner instructor/admin)
- *     tags: [Course]
+ *     summary: upload course thumbnail (owner instructor/admin)
+ *     tags: [course]
  *     parameters:
  *       - in: path
  *         name: id
@@ -335,41 +335,41 @@ export {};
  *                 format: binary
  *     responses:
  *       200:
- *         description: Thumbnail uploaded
+ *         description: thumbnail uploaded
  *       400:
- *         description: File is required
+ *         description: file is required
  */
 
 /**
  * @swagger
  * /admin:
  *   get:
- *     summary: Get all users (admin only)
- *     tags: [Admin]
+ *     summary: get all users (admin only)
+ *     tags: [admin]
  *     responses:
  *       200:
- *         description: Users returned
+ *         description: users returned
  *       403:
- *         description: Unauthorized
+ *         description: unauthorized
  */
 
 /**
  * @swagger
  * /admin/instructor-requests:
  *   get:
- *     summary: Get pending instructor requests (admin only)
- *     tags: [Admin]
+ *     summary: get pending instructor requests (admin only)
+ *     tags: [admin]
  *     responses:
  *       200:
- *         description: Pending requests returned
+ *         description: pending requests returned
  */
 
 /**
  * @swagger
  * /admin/{id}:
  *   delete:
- *     summary: Delete user by id (admin only)
- *     tags: [Admin]
+ *     summary: delete user by id (admin only)
+ *     tags: [admin]
  *     parameters:
  *       - in: path
  *         name: id
@@ -378,17 +378,17 @@ export {};
  *           type: integer
  *     responses:
  *       204:
- *         description: User deleted
+ *         description: user deleted
  *       404:
- *         description: User not found
+ *         description: user not found
  */
 
 /**
  * @swagger
  * /admin/{id}/approve-instructor:
  *   patch:
- *     summary: Approve instructor request (admin only)
- *     tags: [Admin]
+ *     summary: approve instructor request (admin only)
+ *     tags: [admin]
  *     parameters:
  *       - in: path
  *         name: id
@@ -397,17 +397,17 @@ export {};
  *           type: integer
  *     responses:
  *       200:
- *         description: User approved as instructor
+ *         description: user approved as instructor
  *       400:
- *         description: User did not request instructor role
+ *         description: user did not request instructor role
  */
 
 /**
  * @swagger
  * /admin/{id}/reject-instructor:
  *   patch:
- *     summary: Reject instructor request (admin only)
- *     tags: [Admin]
+ *     summary: reject instructor request (admin only)
+ *     tags: [admin]
  *     parameters:
  *       - in: path
  *         name: id
@@ -416,7 +416,7 @@ export {};
  *           type: integer
  *     responses:
  *       200:
- *         description: Instructor request rejected
+ *         description: instructor request rejected
  *       400:
- *         description: User did not request instructor role
+ *         description: user did not request instructor role
  */
